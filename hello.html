@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Summarizer</title>
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 400px;
+        }
+        #url {
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        textarea, input, button {
+            margin: 10px 0;
+            width: 90%;
+            max-width: 500px;
+        }
+        textarea {
+            resize: none;
+            padding: 10px;
+        }
+        button {
+            cursor: pointer;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+<body>
+<!-- Display the URL of the active tab -->
+<p id="url">URL: [Active tab URL will appear here]</p>
+
+<!-- Input box for the user to enter their custom prompt -->
+<input
+        type="text"
+        id="user-prompt"
+        placeholder="Write your custom prompt here..."
+/>
+
+<!-- Button to send the prompt -->
+<button id="send-prompt-btn">Send Prompt</button>
+
+<!-- Text area to display the AI-generated summary -->
+<textarea
+        id="summary-box"
+        rows="10"
+        cols="30"
+        readonly
+        placeholder="Answer will appear here...">
+    </textarea>
+
+<!-- Include your script file -->
+<script src="popup.js"></script>
+</body>
+</html>

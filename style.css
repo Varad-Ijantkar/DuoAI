@@ -1,0 +1,13 @@
+
+#text-select-button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+#text-select-button:hover {
+    background-color: #0056b3;
+}
