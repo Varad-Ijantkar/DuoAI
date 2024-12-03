@@ -1,4 +1,9 @@
 // background.js
+chrome.runtime.onStartup.addListener(() => {
+    chrome.storage.local.clear(() => {
+        console.log('Storage cleared on browser startup.');
+    });
+});
 
 // Function to check if the URL is an Amazon product page for any domain
 function isAmazonProductPage(url) {
@@ -49,14 +54,17 @@ chrome.webNavigation.onCompleted.addListener(async function (details) {
 }, { url: [{ hostContains: 'amazon.' }] });
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-    if (message.action === 'showPopup') {
+    if (message.action === 'setText') {
         const resultText = message.result;
-
-        // Save resultText in storage for the popup to retrieve later
-        chrome.storage.local.set({ result: resultText }, () => {
-            chrome.action.openPopup().catch((error) => {
-                console.error("Failed to open popup:", error);
+        const currentUrl = sender.tab.url; // Get the current URL of the site
+        if (currentUrl) {
+            chrome.storage.local.set({ [currentUrl]: resultText }, () => {
+                chrome.action.openPopup().catch((error) => {
+                    console.error("Failed to open popup:", error);
+                });
             });
-        });
+        } else {
+            console.error("No URL available in sender.tab");
+        }
     }
 });
