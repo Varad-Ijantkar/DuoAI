@@ -61,7 +61,12 @@ async function Summarize(selectedText) {
     const summarizer = await ai.summarizer.create();
     const result = await summarizer.summarize(selectedText);
     console.log(result);
-    alert(result);
+    await chrome.action.openPopup();
+
+    // After a brief delay, send the message to the popup
+    setTimeout(() => {
+        chrome.runtime.sendMessage({ action: 'setText', result: result });
+    }, 500);  // Delay for popup to open
 }
 
 async function SendPrompt(selectedText) {
@@ -78,7 +83,13 @@ async function SendPrompt(selectedText) {
         "Prompt : prompt");
     const result = await session.prompt(`URL : ${url} \n Context : ${selectedText} \n Prompt : ${userPrompt} `);
     console.log(result);
-    alert(result);
+    // Open the extension popup
+    await chrome.action.openPopup();
+
+    // After a brief delay, send the message to the popup
+    setTimeout(() => {
+        chrome.runtime.sendMessage({ action: 'setText', result: result });
+    }, 500);  // Delay for popup to open
 }
 
 const buttonActions = {
@@ -103,3 +114,11 @@ function hideButtonContainer() {
         container.style.display = "none";
     }
 }
+
+// Listen for messages from the background script
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.action === "showResult") {
+        // Display the result on the webpage
+        alert(message.data)
+    }
+});
