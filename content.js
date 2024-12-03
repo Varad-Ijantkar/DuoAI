@@ -1,26 +1,22 @@
-// Add listeners for text selection and interaction
 document.addEventListener("mouseup", (event) => {
     setTimeout(() => {
         const selectedText = window.getSelection().toString().trim();
         if (selectedText) {
-            // Ensure the container exists
             let container = document.getElementById("button-container");
             if (!container) {
                 container = createButtonContainer();
             }
 
-            // Position and display the button container
             const range = window.getSelection().getRangeAt(0);
             const rect = range.getBoundingClientRect();
             positionContainer(container, rect);
             container.style.display = "block";
 
-            // Assign functionality to buttons
             assignButtonActions(selectedText);
         } else {
             hideButtonContainer();
         }
-    }, 0); // Small delay to ensure selection is finalized
+    }, 0);
 });
 
 document.addEventListener("mousedown", (event) => {
@@ -30,7 +26,6 @@ document.addEventListener("mousedown", (event) => {
     }
 });
 
-// Helper: Create the button container
 function createButtonContainer() {
     const container = document.createElement("div");
     container.id = "button-container";
@@ -44,11 +39,11 @@ function createButtonContainer() {
     container.style.boxShadow = "0 2px 5px rgba(0,0,0,0.2)";
 
     // Add buttons
-    ["Summerise", "Send Prompt"].forEach((text, index) => {
+    ["Summarize", "Send Prompt"].forEach((text, index) => {
         const button = document.createElement("button");
         button.textContent = text;
         button.style.margin = "0 5px";
-        button.dataset.action = `action${index + 1}`;
+        button.dataset.action = text.replace(" ", "");
         container.appendChild(button);
     });
 
@@ -56,41 +51,52 @@ function createButtonContainer() {
     return container;
 }
 
-// Helper: Position the button container
 function positionContainer(container, rect) {
     container.style.top = `${window.scrollY + rect.bottom}px`;
     container.style.left = `${window.scrollX + rect.left}px`;
-
-    // Adjust position slightly to avoid overlapping
     container.style.transform = "translateY(5px)";
 }
 
-
-async function Summerize(selectedText) {
-    summarizer = await ai.summarizer.create();
+async function Summarize(selectedText) {
+    const summarizer = await ai.summarizer.create();
     const result = await summarizer.summarize(selectedText);
     console.log(result);
     alert(result);
 }
 
+async function SendPrompt(selectedText) {
+    const url = window.location.href;  // Get current tab's URL
+    const userPrompt = prompt("Enter prompt : ");
+    const session = await ai.languageModel.create({
+        systemPrompt: "answer only the question provided by user",
+    })
+    await session.prompt("I will provide the input in 3 parts, a url, a context and a prompt." +
+        "Answer the prompt with respect to the context and the given url " +
+        "Example : " +
+        "URL : url" +
+        "Context : context" +
+        "Prompt : prompt");
+    const result = await session.prompt(`URL : ${url} \n Context : ${selectedText} \n Prompt : ${userPrompt} `);
+    console.log(result);
+    alert(result);
+}
+
 const buttonActions = {
-    "Summerise":Summerize,
-    "Send Prompt":Summerize,
+    Summarize,
+    SendPrompt,
 };
 
-
-// Helper: Assign actions to buttons
 function assignButtonActions(selectedText) {
     document.querySelectorAll("#button-container button").forEach((button) => {
-        const action = buttonActions[button.textContent];
+        const action = buttonActions[button.dataset.action];
         if (action) {
             button.onclick = () => {
                 action(selectedText);
-            }
+            };
         }
     });
 }
-// Helper: Hide the button container
+
 function hideButtonContainer() {
     const container = document.getElementById("button-container");
     if (container) {
