@@ -63,9 +63,7 @@ async function Summarize(selectedText) {
     console.log(result);
 
     // After a brief delay, send the message to the popup
-    setTimeout(() => {
-        chrome.runtime.sendMessage({ action: 'setText', result: result });
-    }, 500);  // Delay for popup to open
+    await chrome.runtime.sendMessage({action: 'summarise', result: result});
 }
 
 async function SendPrompt(selectedText) {
@@ -118,7 +116,7 @@ function hideButtonContainer() {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "showResult") {
         setTimeout(() => {
-            chrome.runtime.sendMessage({ action: 'setText', result: message.data });
+            chrome.runtime.sendMessage({ action: 'amazon', result: message.data });
         }, 500);
     }
 });

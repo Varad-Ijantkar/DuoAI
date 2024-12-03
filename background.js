@@ -54,7 +54,7 @@ chrome.webNavigation.onCompleted.addListener(async function (details) {
 }, { url: [{ hostContains: 'amazon.' }] });
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-    if (message.action === 'setText') {
+    if (message.action === 'summarise' || message.action === 'amazon') {
         const resultText = message.result;
         const currentUrl = sender.tab.url; // Get the current URL of the site
         if (currentUrl) {

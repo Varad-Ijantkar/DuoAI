@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optimized Popup</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="popup-root">
+    <div class="container-btn">
+        <button id="summarize">
+            <img src="icons/summarise.png" alt="Icon"> Summarise Site
+        </button>
+        <button id="customPrompt">
+            <img src="icons/prompt.png" alt="Icon"> Custom Prompt
+        </button>
+    </div>
+    <div id="input-container" class="input-container hidden">
+        <input id="prompt-input" type="text" placeholder="Type your prompt here..." />
+    </div>
+    <div class="container">
+        <textarea id="user-prompt" placeholder="Answer will appear here..."></textarea>
+    </div>
+</div>
+<script src="popup.js"></script>
+</body>
+</html>
