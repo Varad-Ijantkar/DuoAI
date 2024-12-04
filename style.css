@@ -1,4 +1,4 @@
-.popup-root {
+.ch-ex-popup-root {
     font-family: Arial, sans-serif;
     display: flex;
     flex-direction: column;
@@ -9,9 +9,9 @@
     background-color: #f0f4f8;
 }
 
-.container-btn,
-.container,
-.input-container {
+.ch-ex-container-btn,
+.ch-ex-container,
+.ch-ex-input-container {
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -22,13 +22,19 @@
     padding: 10px;
 }
 
-.container-btn {
+.ch-ex-container-btn {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-button {
+.ch-ex-btn-wrapper {
+    flex: 1;
+    margin: 0 5px;
+}
+
+#ch-ex-summarize,
+#ch-ex-customPrompt {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -38,29 +44,30 @@ button {
     padding: 10px 15px;
     border-radius: 5rem;
     cursor: pointer;
-    flex: 1;
-    margin: 0 5px;
+    width: 100%;
 }
 
-button img {
+#ch-ex-summarize img,
+#ch-ex-customPrompt img {
     margin-right: 8px;
     vertical-align: middle;
     height: 20px;
     width: 20px;
 }
 
-button:hover {
+#ch-ex-summarize:hover,
+#ch-ex-customPrompt:hover {
     background-color: #0056b3;
 }
 
-.input-container {
+.ch-ex-input-container {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 10px;
 }
 
-.input-container input {
+#ch-ex-prompt-input {
     width: 100%;
     height: 35px;
     font-size: 16px;
@@ -72,17 +79,17 @@ button:hover {
     background-color: #fafafa;
 }
 
-.input-container input:focus {
+#ch-ex-prompt-input:focus {
     border-color: #007BFF;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
-.hidden {
+.ch-ex-hidden {
     display: none;
 }
 
-#user-prompt {
-    width: 260px;
+#ch-ex-user-prompt {
+    width: 270px;
     height: 300px;
     font-size: 16px;
     border: 1px solid #ccc;
@@ -93,7 +100,7 @@ button:hover {
     background-color: #fafafa;
 }
 
-#user-prompt:focus {
+#ch-ex-user-prompt:focus {
     border-color: #007BFF;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }

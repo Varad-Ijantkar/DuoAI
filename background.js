@@ -1,4 +1,3 @@
-// background.js
 chrome.runtime.onStartup.addListener(() => {
     chrome.storage.local.clear(() => {
         console.log('Storage cleared on browser startup.');
@@ -19,18 +18,9 @@ function isAmazonProductPage(url) {
         return false;
     }
 }
+
 function formatLLMOutput(inputText) {
-    // Replace asterisks and clean up text
-     // Trim any excess spaces from the beginning and end
-    // You can return the formatted text or display it
-    return inputText
-        // Remove the leading '*' from each line
-        .replace(/^\* /gm, '')
-        // Replace double newlines with a single newline
-        .replace(/\n{2,}/g, '\n\n')
-        // Optionally, replace newlines that might be after headings with double newlines
-        .replace(/(\n)(\w)/g, '\n\n$2')
-        .trim();
+    return inputText.replace(/\*\*?|##/g, '');
 }
 
 // Listener to detect when the user navigates to a new page
@@ -55,7 +45,8 @@ chrome.webNavigation.onCompleted.addListener(async function (details) {
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     if (message.action === 'summarise' || message.action === 'amazon') {
-        const resultText = message.result;
+        const resultText = formatLLMOutput(message.result);
+
         const currentUrl = sender.tab.url; // Get the current URL of the site
         if (currentUrl) {
             chrome.storage.local.set({ [currentUrl]: resultText }, () => {
@@ -63,8 +54,14 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
                     console.error("Failed to open popup:", error);
                 });
             });
-        } else {
-            console.error("No URL available in sender.tab");
         }
+    } else if (message.action === 'sendPrompt') {
+        // Store the message in storage
+        chrome.storage.local.set({ sendPromptData: message.result }, () => {
+            chrome.action.openPopup().catch((error) => {
+                console.error("Failed to open popup:", error);
+            });
+        });
     }
 });
+

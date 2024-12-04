@@ -66,27 +66,9 @@ async function Summarize(selectedText) {
     await chrome.runtime.sendMessage({action: 'summarise', result: result});
 }
 
-async function SendPrompt(selectedText) {
-    const url = window.location.href;  // Get current tab's URL
-    const userPrompt = prompt("Enter prompt : ");
-    const session = await ai.languageModel.create({
-        systemPrompt: "answer only the question provided by user",
-    })
-    await session.prompt("I will provide the input in 3 parts, a url, a context and a prompt." +
-        "Answer the prompt with respect to the context and the given url " +
-        "Example : " +
-        "URL : url" +
-        "Context : context" +
-        "Prompt : prompt");
-    const result = await session.prompt(`URL : ${url} \n Context : ${selectedText} \n Prompt : ${userPrompt} `);
-    console.log(result);
-    // Open the extension popup
-
-
-    // After a brief delay, send the message to the popup
-    setTimeout(() => {
-        chrome.runtime.sendMessage({ action: 'setText', result: result });
-    }, 500);  // Delay for popup to open
+function SendPrompt(selectedText) {
+    const senderUrl = window.location.href;  // Get current tab's URL
+    chrome.runtime.sendMessage({action: 'sendPrompt', result: [selectedText,senderUrl]});
 }
 
 const buttonActions = {

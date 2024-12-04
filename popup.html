@@ -7,20 +7,24 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="popup-root">
-    <div class="container-btn">
-        <button id="summarize">
-            <img src="icons/summarise.png" alt="Icon"> Summarise Site
-        </button>
-        <button id="customPrompt">
-            <img src="icons/prompt.png" alt="Icon"> Custom Prompt
-        </button>
+<div class="ch-ex-popup-root">
+    <div class="ch-ex-container-btn">
+        <div class="ch-ex-btn-wrapper">
+            <button id="ch-ex-summarize">
+                <img src="icons/summarise.png" alt="Icon"> Summarise Site
+            </button>
+        </div>
+        <div class="ch-ex-btn-wrapper">
+            <button id="ch-ex-customPrompt">
+                <img src="icons/prompt.png" alt="Icon"> Custom Prompt
+            </button>
+        </div>
     </div>
-    <div id="input-container" class="input-container hidden">
-        <input id="prompt-input" type="text" placeholder="Type your prompt here..." />
+    <div id="ch-ex-input-container" class="ch-ex-input-container ch-ex-hidden">
+        <input id="ch-ex-prompt-input" type="text" placeholder="Type your prompt here..." />
     </div>
-    <div class="container">
-        <textarea id="user-prompt" placeholder="Answer will appear here..."></textarea>
+    <div class="ch-ex-container">
+        <textarea id="ch-ex-user-prompt" placeholder="Answer will appear here..."></textarea>
     </div>
 </div>
 <script src="popup.js"></script>
