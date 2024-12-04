@@ -1,3 +1,7 @@
+function formatLLMOutput(inputText) {
+    return inputText.replace(/\*\*?|##/g, '');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     // Existing functionality for sendPrompt
     chrome.storage.local.get('sendPromptData', (data) => {
@@ -42,7 +46,8 @@ summariseBtn.addEventListener('click', () => {
                 "Example : Page : What is an abc on xyz.com" +
                 "Answer : Answer should focus more on what an abc is not on the xyz website"
         });
-        const result = await session.prompt(`Summarise this website , URL : ${currentUrl}`);
+        let result = await session.prompt(`Summarise this website , URL : ${currentUrl}`);
+        result=formatLLMOutput(result);
         textArea.value = result;
         // Save the result in chrome.storage.local, using the URL as the key
         chrome.storage.local.set({ [currentUrl]: result }, () => {

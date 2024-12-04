@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Hello Extensions",
+  "name": "AI Summarizer",
   "description": "Base Level Extension",
   "version": "1.0",
   "permissions": ["activeTab","scripting","webNavigation","storage"],
@@ -18,6 +18,6 @@
   ],
   "action": {
     "default_popup": "popup.html",
-    "default_icon": "icons/hello_icon.png"
+    "default_icon": "icons/ai-technology.png"
   }
 }

@@ -1,12 +1,15 @@
 .ch-ex-popup-root {
-    font-family: Arial, sans-serif;
+    font-family: 'Consolas', monospace;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
     width: 300px;
-    height: 400px; /* Increased height to accommodate input box */
+    height: 420px; /* Adjust height as needed */
     background-color: #f0f4f8;
+    border-radius: 16px; /* Add rounded edges */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Add subtle shadow for better appearance */
+    overflow: hidden; /* Ensures content stays within rounded corners */
 }
 
 .ch-ex-container-btn,
@@ -18,8 +21,9 @@
     width: 90%;
     max-width: 400px;
     text-align: center;
-    margin: 10px 0;
+    margin: 5px;
     padding: 10px;
+    font-family: 'Consolas', monospace;
 }
 
 .ch-ex-container-btn {
@@ -38,13 +42,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #6faa4d;
+    background-color: #1f62b9;
     color: white;
     border: none;
     padding: 10px 15px;
     border-radius: 5rem;
     cursor: pointer;
     width: 100%;
+    font-family: 'Consolas', monospace;
 }
 
 #ch-ex-summarize img,
@@ -77,6 +82,7 @@
     box-sizing: border-box;
     outline: none;
     background-color: #fafafa;
+    font-family: 'Consolas', monospace;
 }
 
 #ch-ex-prompt-input:focus {
@@ -92,6 +98,7 @@
     width: 270px;
     height: 300px;
     font-size: 16px;
+    font-family: 'Consolas', monospace;
     border: 1px solid #ccc;
     border-radius: 8px;
     resize: none;

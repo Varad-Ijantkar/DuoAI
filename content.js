@@ -32,24 +32,52 @@ function createButtonContainer() {
     container.style.position = "absolute";
     container.style.zIndex = "9999";
     container.style.display = "none";
-    container.style.background = "#f0f0f0";
-    container.style.border = "1px solid #ccc";
+    container.style.background = "#eaf4fe"; // Light blue background
+    container.style.border = "1px solid #0078d7"; // Blue border
     container.style.padding = "5px";
-    container.style.borderRadius = "5px";
-    container.style.boxShadow = "0 2px 5px rgba(0,0,0,0.2)";
+    container.style.borderRadius = "10px";
+    container.style.boxShadow = "0 4px 8px rgba(0, 0, 0, 0.1)";
+    container.style.fontFamily = "Consolas, monospace"; // Consolas font
+
+    // Flexbox for button layout
+    container.style.display = "flex";
+    container.style.justifyContent = "space-between"; // Space between buttons
+    container.style.alignItems = "center"; // Vertically center align
 
     // Add buttons
-    ["Summarize", "Send Prompt"].forEach((text, index) => {
+    ["Summarize", "Send Prompt"].forEach((text) => {
         const button = document.createElement("button");
         button.textContent = text;
-        button.style.margin = "0 5px";
         button.dataset.action = text.replace(" ", "");
+        button.style.cssText = `
+            background-color: #0078d7;
+            color: white;
+            border: none;
+            padding: 5px 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: Consolas, monospace;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            margin:2px; 
+        `;
+        button.addEventListener("mouseenter", () => {
+            button.style.backgroundColor = "#005ea5"; // Darker blue on hover
+            button.style.transform = "scale(1.05)";
+        });
+        button.addEventListener("mouseleave", () => {
+            button.style.backgroundColor = "#0078d7";
+            button.style.transform = "scale(1)";
+        });
+
         container.appendChild(button);
     });
 
     document.body.appendChild(container);
     return container;
 }
+
 
 function positionContainer(container, rect) {
     container.style.top = `${window.scrollY + rect.bottom}px`;
@@ -63,12 +91,15 @@ async function Summarize(selectedText) {
     console.log(result);
 
     // After a brief delay, send the message to the popup
-    await chrome.runtime.sendMessage({action: 'summarise', result: result});
+    await chrome.runtime.sendMessage({ action: "summarise", result: result });
 }
 
 function SendPrompt(selectedText) {
-    const senderUrl = window.location.href;  // Get current tab's URL
-    chrome.runtime.sendMessage({action: 'sendPrompt', result: [selectedText,senderUrl]});
+    const senderUrl = window.location.href; // Get current tab's URL
+    chrome.runtime.sendMessage({
+        action: "sendPrompt",
+        result: [selectedText, senderUrl],
+    });
 }
 
 const buttonActions = {
@@ -98,7 +129,7 @@ function hideButtonContainer() {
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.action === "showResult") {
         setTimeout(() => {
-            chrome.runtime.sendMessage({ action: 'amazon', result: message.data });
+            chrome.runtime.sendMessage({ action: "amazon", result: message.data });
         }, 500);
     }
 });
